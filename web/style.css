@@ -1,0 +1,735 @@
+/* ==========================================================================
+   AALSI MATERIAL YOU (MATERIAL DESIGN 3) DESIGN SYSTEM
+   Purple/Violet Seed (#6750A4) • Tonal Surfaces • Organic Curves • State Layers
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+  /* MD3 Purple/Violet Seed Tonal Palette */
+  --md-sys-color-background: #FFFBFE;
+  --md-sys-color-on-background: #1C1B1F;
+  --md-sys-color-surface: #FFFBFE;
+  --md-sys-color-on-surface: #1C1B1F;
+  --md-sys-color-on-surface-variant: #49454F;
+  
+  --md-sys-color-surface-container: #F3EDF7;
+  --md-sys-color-surface-container-low: #E7E0EC;
+  --md-sys-color-surface-container-high: #ECE6F0;
+  
+  --md-sys-color-primary: #6750A4;
+  --md-sys-color-on-primary: #FFFFFF;
+  --md-sys-color-primary-container: #EADDFF;
+  --md-sys-color-on-primary-container: #21005D;
+  
+  --md-sys-color-secondary-container: #E8DEF8;
+  --md-sys-color-on-secondary-container: #1D192B;
+  
+  --md-sys-color-tertiary: #7D5260;
+  --md-sys-color-on-tertiary: #FFFFFF;
+  --md-sys-color-tertiary-container: #FFD8E4;
+  --md-sys-color-on-tertiary-container: #31111D;
+  
+  --md-sys-color-error: #B3261E;
+  --md-sys-color-error-container: #F9DEDC;
+  --md-sys-color-on-error-container: #410E0B;
+  
+  --md-sys-color-outline: #79747E;
+  --md-sys-color-outline-variant: #CAC4D0;
+  
+  /* MD3 Easing & Motion */
+  --md-motion-easing: cubic-bezier(0.2, 0, 0, 1);
+  --md-motion-duration-short: 200ms;
+  --md-motion-duration-medium: 300ms;
+  
+  /* MD3 Elevation Shadows */
+  --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.08), 0px 1px 2px 0px rgba(0, 0, 0, 0.12);
+  --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.08), 0px 1px 2px 0px rgba(0, 0, 0, 0.12);
+  --md-elevation-3: 0px 4px 12px 3px rgba(0, 0, 0, 0.08), 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body.md3-theme {
+  background-color: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-surface);
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   ORGANIC ATMOSPHERIC BLUR SHAPES
+   ========================================================================== */
+
+.md3-ambient-glow {
+  position: absolute;
+  top: -80px;
+  right: -50px;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(103, 80, 164, 0.16) 0%, rgba(232, 222, 248, 0.08) 50%, transparent 70%);
+  filter: blur(64px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.md3-ambient-glow-left {
+  position: absolute;
+  top: 350px;
+  left: -120px;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(125, 82, 96, 0.12) 0%, rgba(255, 216, 228, 0.06) 50%, transparent 70%);
+  filter: blur(56px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ==========================================================================
+   APP BAR (NAVIGATION)
+   ========================================================================== */
+
+.md3-app-bar {
+  background: rgba(255, 251, 254, 0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(121, 116, 126, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.md3-bar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.85rem 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.md3-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.md3-logo-badge {
+  width: 44px;
+  height: 44px;
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: var(--md-elevation-1);
+}
+
+.md3-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--md-sys-color-primary);
+  letter-spacing: -0.01em;
+}
+
+.md3-subtitle {
+  font-size: 0.8rem;
+  color: var(--md-sys-color-on-surface-variant);
+  font-weight: 400;
+}
+
+.md3-bar-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* MD3 Chips & Pills */
+.md3-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.95rem;
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all var(--md-motion-duration-medium) var(--md-motion-easing);
+}
+
+.md3-chip .chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--md-sys-color-primary);
+  transition: background-color var(--md-motion-duration-short) ease;
+}
+
+.md3-chip.online {
+  background: #e8f5e9;
+  color: #1b5e20;
+  border: 1px solid #a5d6a7;
+  font-weight: 600;
+}
+
+.md3-chip.online .chip-dot {
+  background: #2e7d32;
+  box-shadow: 0 0 6px rgba(46, 125, 50, 0.6);
+}
+
+.md3-chip.offline {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.md3-chip.offline .chip-dot {
+  background: #b71c1c;
+  box-shadow: 0 0 6px rgba(183, 28, 28, 0.5);
+}
+
+.md3-segmented-button {
+  display: flex;
+  background: var(--md-sys-color-surface-container);
+  border-radius: 9999px;
+  padding: 3px;
+  border: 1px solid rgba(121, 116, 126, 0.2);
+}
+
+.md3-seg-btn {
+  background: transparent;
+  border: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface-variant);
+  cursor: pointer;
+  transition: all var(--md-motion-duration-short) var(--md-motion-easing);
+}
+
+.md3-seg-btn:active {
+  transform: scale(0.95);
+}
+
+.md3-seg-btn.active {
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  box-shadow: var(--md-elevation-1);
+}
+
+.md3-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  background: var(--md-sys-color-surface-container);
+  border: none;
+  color: var(--md-sys-color-on-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all var(--md-motion-duration-short) var(--md-motion-easing);
+}
+
+.md3-icon-btn:hover {
+  background: var(--md-sys-color-secondary-container);
+  box-shadow: var(--md-elevation-1);
+}
+
+.md3-icon-btn:active {
+  transform: scale(0.95);
+}
+
+/* ==========================================================================
+   BUTTONS (PILL-SHAPED WITH STATE LAYERS)
+   ========================================================================== */
+
+.md3-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 44px;
+  padding: 0 1.5rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--md-motion-duration-medium) var(--md-motion-easing);
+  position: relative;
+  overflow: hidden;
+}
+
+.md3-btn:active {
+  transform: scale(0.95);
+}
+
+.md3-btn-primary {
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  box-shadow: var(--md-elevation-1);
+}
+
+.md3-btn-primary:hover {
+  background: rgba(103, 80, 164, 0.9);
+  box-shadow: var(--md-elevation-2);
+  transform: translateY(-1px);
+}
+
+.md3-btn-tonal {
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
+
+.md3-btn-tonal:hover {
+  background: rgba(232, 222, 248, 0.8);
+  box-shadow: var(--md-elevation-1);
+}
+
+.md3-btn-outlined {
+  background: transparent;
+  color: var(--md-sys-color-primary);
+  border: 1px solid var(--md-sys-color-outline);
+}
+
+.md3-btn-outlined:hover {
+  background: rgba(103, 80, 164, 0.08);
+}
+
+.md3-btn-danger {
+  background: var(--md-sys-color-error);
+  color: #FFFFFF;
+}
+
+.md3-btn-sm {
+  height: 36px;
+  padding: 0 1rem;
+  font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   MAIN CONTAINER & CARD SYSTEM
+   ========================================================================== */
+
+.md3-container {
+  max-width: 1160px;
+  margin: 1.75rem auto;
+  padding: 0 1.5rem;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero Morning Digest Banner */
+.md3-hero-card {
+  background: linear-gradient(135deg, var(--md-sys-color-surface-container) 0%, rgba(234, 221, 255, 0.45) 100%);
+  border-radius: 40px;
+  padding: 2.25rem;
+  box-shadow: var(--md-elevation-1);
+  border: 1px solid rgba(121, 116, 126, 0.12);
+  transition: all var(--md-motion-duration-medium) var(--md-motion-easing);
+  position: relative;
+  overflow: hidden;
+}
+
+.md3-hero-card:hover {
+  box-shadow: var(--md-elevation-2);
+}
+
+.md3-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.md3-hero-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--md-sys-color-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.md3-lead-text {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--md-sys-color-on-surface);
+  white-space: pre-line;
+  max-width: 880px;
+  margin-bottom: 1.5rem;
+}
+
+.md3-hero-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Upload Ingestion Card */
+.md3-drop-card {
+  background: var(--md-sys-color-surface-container);
+  border-radius: 32px;
+  padding: 2.25rem 1.75rem;
+  text-align: center;
+  border: 2px dashed rgba(103, 80, 164, 0.3);
+  cursor: pointer;
+  transition: all var(--md-motion-duration-medium) var(--md-motion-easing);
+}
+
+.md3-drop-card:hover, .md3-drop-card.dragover {
+  background: var(--md-sys-color-secondary-container);
+  border-color: var(--md-sys-color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--md-elevation-2);
+}
+
+.md3-drop-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-primary);
+  border-radius: 9999px;
+  margin: 0 auto 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+}
+
+.md3-drop-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface);
+  margin-bottom: 0.25rem;
+}
+
+.md3-drop-sub {
+  font-size: 0.85rem;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-bottom: 1.25rem;
+}
+
+/* ==========================================================================
+   TONAL SURFACE GRID (TODAY / TOMORROW / THIS WEEK)
+   ========================================================================== */
+
+.md3-columns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.md3-column-card {
+  background: var(--md-sys-color-surface-container);
+  border-radius: 28px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--md-motion-duration-medium) var(--md-motion-easing);
+  box-shadow: var(--md-elevation-1);
+}
+
+.md3-column-card:hover {
+  box-shadow: var(--md-elevation-2);
+}
+
+.md3-col-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.md3-col-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.md3-col-title.urgent {
+  color: var(--md-sys-color-tertiary);
+}
+
+.md3-badge {
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.md3-badge.urgent {
+  background: var(--md-sys-color-tertiary-container);
+  color: var(--md-sys-color-on-tertiary-container);
+}
+
+.md3-items-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+/* Individual Deadline Card */
+.md3-item-card {
+  background: var(--md-sys-color-surface);
+  border-radius: 20px;
+  padding: 1.15rem;
+  box-shadow: var(--md-elevation-1);
+  transition: all var(--md-motion-duration-medium) var(--md-motion-easing);
+  position: relative;
+  overflow: hidden;
+}
+
+.md3-item-card:hover {
+  box-shadow: var(--md-elevation-2);
+  transform: translateY(-2px) scale(1.01);
+}
+
+.md3-item-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.md3-course-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--md-sys-color-primary);
+  background: var(--md-sys-color-primary-container);
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+}
+
+.md3-due-time {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.md3-item-title {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface);
+  margin-bottom: 0.35rem;
+}
+
+.md3-item-action {
+  font-size: 0.85rem;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-bottom: 0.75rem;
+}
+
+/* Evidence Accordion */
+.md3-evidence-box {
+  background: var(--md-sys-color-surface-container-low);
+  border-radius: 14px;
+  padding: 0.6rem 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.md3-evidence-box summary {
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--md-sys-color-primary);
+  user-select: none;
+}
+
+.md3-quote {
+  margin-top: 0.4rem;
+  border-left: 2px solid var(--md-sys-color-primary);
+  padding-left: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+/* ==========================================================================
+   OVERDUE & REVIEW SURFACES
+   ========================================================================== */
+
+.md3-overdue-card {
+  background: var(--md-sys-color-error-container);
+  color: var(--md-sys-color-on-error-container);
+  border-radius: 28px;
+  padding: 1.75rem;
+  box-shadow: var(--md-elevation-1);
+}
+
+.md3-overdue-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.md3-review-card {
+  background: var(--md-sys-color-surface-container-high);
+  border-radius: 28px;
+  padding: 1.75rem;
+  box-shadow: var(--md-elevation-1);
+}
+
+.md3-review-actions {
+  display: flex;
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+}
+
+.md3-empty-state {
+  text-align: center;
+  padding: 2rem 0;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   MATERIAL 3 FILLED INPUT (MODAL)
+   ========================================================================== */
+
+.md3-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 27, 31, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.md3-modal.hidden { display: none; }
+
+.md3-modal-surface {
+  background: var(--md-sys-color-surface-container-high);
+  border-radius: 32px;
+  width: 90%;
+  max-width: 480px;
+  padding: 2rem;
+  box-shadow: var(--md-elevation-3);
+  animation: md3Pop 0.25s var(--md-motion-easing);
+}
+
+@keyframes md3Pop {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.md3-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.md3-modal-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+}
+
+.md3-field-container {
+  margin-bottom: 1.5rem;
+}
+
+.md3-field-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-bottom: 0.4rem;
+}
+
+/* MD3 Filled Input Style */
+.md3-filled-select {
+  width: 100%;
+  height: 52px;
+  background: var(--md-sys-color-surface-container-low);
+  border: none;
+  border-radius: 12px 12px 0 0;
+  border-bottom: 2px solid var(--md-sys-color-outline);
+  padding: 0 1rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--md-sys-color-on-surface);
+  transition: all var(--md-motion-duration-short) var(--md-motion-easing);
+}
+
+.md3-filled-select:focus {
+  outline: none;
+  border-bottom-color: var(--md-sys-color-primary);
+  background: rgba(103, 80, 164, 0.08);
+}
+
+/* Toast */
+.md3-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--md-sys-color-on-surface);
+  color: var(--md-sys-color-surface);
+  border-radius: 9999px;
+  padding: 0.75rem 1.75rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  box-shadow: var(--md-elevation-2);
+  z-index: 200;
+}
+.md3-toast.hidden { display: none; }
+
+.hidden {
+  display: none !important;
+}
+
+.md3-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(103, 80, 164, 0.2);
+  border-top-color: var(--md-sys-color-primary);
+  border-radius: 9999px;
+  animation: md3Spin 0.8s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+@keyframes md3Spin {
+  to { transform: rotate(360deg); }
+}
+
+.md3-footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.85rem;
+}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aalsi — Local-First Deadline Catcher</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="md3-theme">
+
+  <!-- Ambient Organic Blur Shapes -->
+  <div class="md3-ambient-glow" aria-hidden="true"></div>
+  <div class="md3-ambient-glow-left" aria-hidden="true"></div>
+
+  <!-- MD3 Top App Bar -->
+  <header class="md3-app-bar">
+    <div class="md3-bar-container">
+      <div class="md3-brand">
+        <div class="md3-logo-badge">💤</div>
+        <div>
+          <h1 class="md3-title" data-i18n="app_name">Aalsi</h1>
+          <p class="md3-subtitle" data-i18n="tagline">Aalsi did the reading. You do the doing.</p>
+        </div>
+      </div>
+
+      <div class="md3-bar-controls">
+        <div class="md3-chip" id="ollamaPill">
+          <span class="chip-dot"></span>
+          <span id="ollamaStatusText" data-i18n="ollama_status">Checking Ollama...</span>
+        </div>
+
+        <div class="md3-segmented-button">
+          <button id="langEnBtn" class="md3-seg-btn active">EN</button>
+          <button id="langHiBtn" class="md3-seg-btn">हिन्दी</button>
+        </div>
+
+        <button id="settingsBtn" class="md3-icon-btn" title="Settings">⚙️</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="md3-container">
+
+    <!-- HERO MORNING DIGEST CARD -->
+    <section class="md3-hero-card">
+      <div class="md3-card-header">
+        <h2 class="md3-hero-title">
+          <span>🌅</span>
+          <span data-i18n="morning_digest">Morning Digest</span>
+        </h2>
+        <div class="md3-hero-actions">
+          <button class="md3-btn md3-btn-tonal md3-btn-sm" id="copyDigestBtn" data-i18n="copy_digest">Copy Plain Text</button>
+          <a href="/api/export.ics" class="md3-btn md3-btn-primary md3-btn-sm" id="exportIcsBtn" data-i18n="export_ics">Export .ics Calendar</a>
+        </div>
+      </div>
+      <p class="md3-lead-text" id="digestSummary">
+        Loading your morning digest...
+      </p>
+      <div id="digestModeBar" style="margin-top:0.75rem; font-size:0.82rem; font-weight:500; color:var(--md-sys-color-on-surface-variant); display:flex; align-items:center; gap:0.4rem;">
+        <span>⚙️ Extracted by:</span>
+        <span id="extractedByMode" style="font-weight:600; text-transform:none;">rule mode</span>
+      </div>
+    </section>
+
+    <!-- INGESTION DROPZONE (ORGANIC ROUNDED SURFACE) -->
+    <section class="md3-drop-card" id="dropzone">
+      <div class="md3-drop-icon">📥</div>
+      <h3 class="md3-drop-title" data-i18n="dropzone_title">Drop exported WhatsApp chat (.txt)</h3>
+      <p class="md3-drop-sub" data-i18n="dropzone_sub">WhatsApp &gt; Chat &gt; More &gt; Export chat &gt; Without media</p>
+      <div>
+        <input type="file" id="fileInput" accept=".txt" multiple style="display:none;">
+        <button class="md3-btn md3-btn-primary" id="browseBtn" data-i18n="dropzone_btn">Choose Chat Files</button>
+      </div>
+      <div id="uploadProgress" class="upload-progress hidden" style="margin-top:1rem; font-weight:500; color:var(--md-sys-color-primary); display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+        <span class="md3-spinner"></span>
+        <span id="progressText">Aalsi is reading your chat...</span>
+      </div>
+    </section>
+
+    <!-- TONAL THREE-COLUMN SURFACE GRID -->
+    <section class="md3-columns-grid">
+      <!-- TODAY -->
+      <div class="md3-column-card">
+        <div class="md3-col-header">
+          <h3 class="md3-col-title urgent">
+            <span>🔴</span>
+            <span data-i18n="today">Today</span>
+          </h3>
+          <span class="md3-badge urgent" id="todayCount">0</span>
+        </div>
+        <div class="md3-items-stack" id="todayList">
+          <p class="md3-empty-state" data-i18n="no_items_today">No deadlines due today! Relax.</p>
+        </div>
+      </div>
+
+      <!-- TOMORROW -->
+      <div class="md3-column-card">
+        <div class="md3-col-header">
+          <h3 class="md3-col-title">
+            <span>🟡</span>
+            <span data-i18n="tomorrow">Tomorrow</span>
+          </h3>
+          <span class="md3-badge" id="tomorrowCount">0</span>
+        </div>
+        <div class="md3-items-stack" id="tomorrowList">
+          <p class="md3-empty-state" data-i18n="no_items_tomorrow">Tomorrow is clear.</p>
+        </div>
+      </div>
+
+      <!-- THIS WEEK -->
+      <div class="md3-column-card">
+        <div class="md3-col-header">
+          <h3 class="md3-col-title">
+            <span>🔵</span>
+            <span data-i18n="this_week">This Week</span>
+          </h3>
+          <span class="md3-badge" id="weekCount">0</span>
+        </div>
+        <div class="md3-items-stack" id="weekList">
+          <p class="md3-empty-state" data-i18n="no_items_week">Nothing scheduled for the rest of the week.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- OVERDUE / MISSED SURFACE -->
+    <section class="md3-overdue-card" id="missedSection">
+      <h3 class="md3-overdue-title">
+        <span>⚠️</span>
+        <span data-i18n="you_may_have_missed">You May Have Missed</span>
+        <span class="md3-badge" style="background:#fff; color:var(--md-sys-color-error);" id="missedCount">0</span>
+      </h3>
+      <div class="md3-items-stack" id="missedList">
+        <p class="md3-empty-state" style="color:inherit;">No past deadlines missed.</p>
+      </div>
+    </section>
+
+    <!-- REVIEW QUEUE SURFACE -->
+    <section class="md3-review-card" id="reviewSection">
+      <div class="md3-col-header">
+        <h3 class="md3-col-title">
+          <span>🔍</span>
+          <span data-i18n="review_queue">Review Queue</span>
+        </h3>
+        <span class="md3-badge" id="reviewCount">0</span>
+      </div>
+      <div class="md3-items-stack" id="reviewList">
+        <p class="md3-empty-state" data-i18n="no_review_items">Review queue is empty. All items are high confidence.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FALLBACK CHOICE MODAL (WHEN OLLAMA IS UNREACHABLE) -->
+  <div class="md3-modal hidden" id="fallbackChoiceModal">
+    <div class="md3-modal-surface">
+      <div class="md3-modal-header">
+        <h3 class="md3-modal-title" style="color:var(--md-sys-color-error);">⚠️ Ollama Unreachable</h3>
+        <button class="md3-icon-btn" id="closeFallbackBtn">&times;</button>
+      </div>
+      <div class="md3-modal-body">
+        <p id="fallbackErrorMsg" style="margin-bottom:1rem; font-size:0.9rem; line-height:1.4;">
+          Aalsi could not reach local Ollama on port 11434. Aalsi never silently falls back.
+        </p>
+        <p style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant); margin-bottom:1.5rem;">
+          Would you like to process this chat using deterministic <strong>Rule mode</strong> (faster, zero AI models required), or cancel to start Ollama first?
+        </p>
+        <div style="display:flex; justify-content:flex-end; gap:0.75rem;">
+          <button class="md3-btn md3-btn-tonal" id="cancelUploadBtn">Cancel</button>
+          <button class="md3-btn md3-btn-primary" id="processRuleModeBtn">Process in rule mode</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MD3 SETTINGS DIALOG -->
+  <div class="md3-modal hidden" id="settingsModal">
+    <div class="md3-modal-surface">
+      <div class="md3-modal-header">
+        <h3 class="md3-modal-title" data-i18n="settings">Settings</h3>
+        <button class="md3-icon-btn" id="closeSettingsBtn">&times;</button>
+      </div>
+      <div class="md3-modal-body">
+        <div class="md3-field-container">
+          <label for="modelSelect" class="md3-field-label" data-i18n="model_select">Gemma Model</label>
+          <select id="modelSelect" class="md3-filled-select">
+            <option value="gemma3:12b" data-i18n="model_12b">Gemma 3 12B (Default / High Accuracy)</option>
+            <option value="gemma3:4b" data-i18n="model_4b">Gemma 3 4B (Fast / Runs on any laptop)</option>
+          </select>
+        </div>
+
+        <div id="modelStatusNotice" class="hidden" style="margin-bottom:1rem; padding:0.75rem; border-radius:8px; font-size:0.85rem; line-height:1.4;">
+        </div>
+
+        <p style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant); margin-bottom:1.5rem;">
+          🔒 <span data-i18n="privacy_note">100% Private. Private group chats never leave your machine.</span>
+        </p>
+
+        <div style="display:flex; justify-content:flex-end;">
+          <button class="md3-btn md3-btn-danger" id="purgeBtn" data-i18n="purge_all">Purge Local Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="md3-footer">
+    <p>Aalsi &bull; Local &amp; Private</p>
+  </footer>
+
+  <div id="toast" class="md3-toast hidden"></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

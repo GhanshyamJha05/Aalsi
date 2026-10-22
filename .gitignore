@@ -1,0 +1,40 @@
+# Binaries and executables
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin/
+dist/
+aalsi
+aalsi.exe
+
+# Database and SQLite data
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Test artifacts and temporary files
+*.test
+*.out
+demo_output/
+scratch/
+tmp/
+temp/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE and Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Cloud sync artifacts
+.sync/
