@@ -360,6 +360,18 @@ func (s *Server) handlePurge(w http.ResponseWriter, r *http.Request) {
 
 // DetectLANIPv4 finds the primary outbound LAN IPv4 address
 func DetectLANIPv4() (string, error) {
+	// 1. Try dialing a public endpoint (UDP connect without sending packets)
+	// This lets the OS routing table choose the true outbound LAN interface.
+	conn, err := net.Dial("udp", "8.8.8.8:80")
+	if err == nil {
+		defer conn.Close()
+		localAddr := conn.LocalAddr().(*net.UDPAddr)
+		if localAddr.IP.To4() != nil && !localAddr.IP.IsLoopback() {
+			return localAddr.IP.String(), nil
+		}
+	}
+
+	// 2. Fallback to scanning interfaces if offline
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
 		return "", err
